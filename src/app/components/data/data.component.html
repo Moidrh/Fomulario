@@ -2,13 +2,22 @@
 <hr>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
-    <div>
+    <div formGroupName="nombreCompleto">
 
-        <div class="form-group row">
+        <!-- [ngClass]="{'has-danger': !forma.get('nombre').valid}" -->
+
+        <div class="form-group row" [ngClass]="{'has-danger': !forma.controls['nombreCompleto'].controls['nombre'].valid}">
             <label class="col-2 col-form-label">Nombre</label>
             <div class="col-8">
 
                 <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
+
+                <div class="form-control-feedback" *ngIf="forma.get('nombreCompleto.nombre').errors?.required">
+                    El nombre es necesario
+                </div>
+                <div class="form-control-feedback" *ngIf="forma.get('nombreCompleto.nombre').errors?.minlength">
+                    El nombre debe tener más de 3 caracteres
+                </div>
             </div>
         </div>
 
