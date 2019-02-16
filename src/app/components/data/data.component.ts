@@ -30,6 +30,8 @@ export class DataComponent implements OnInit {
       }),
       'correo': new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])
     });
+
+    this.forma.setValue(this.usuario);
   }
 
   ngOnInit() {
@@ -37,6 +39,7 @@ export class DataComponent implements OnInit {
 
   guardarCambios() {
     console.log(this.forma.value);
+    this.forma.reset();
   }
 
 }
