@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validator, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validator, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-data',
@@ -15,7 +15,8 @@ export class DataComponent implements OnInit {
       nombre: 'Moises',
       apellido: 'Rojas'
     },
-    correo: 'moises.rojas@gmail.com'
+    correo: 'moises.rojas@gmail.com',
+    // pasatiempos: ['Correr', 'Dormir', 'Comer' ]
   };
 
   constructor() {
@@ -28,10 +29,13 @@ export class DataComponent implements OnInit {
         'nombre': new FormControl('', [Validators.required, Validators.minLength(3)]),
         'apellido': new FormControl('', Validators.required),
       }),
-      'correo': new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])
+      'correo': new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
+      'pasatiempos': new FormArray([
+        new FormControl('Correr', Validators.required)
+      ])
     });
 
-    this.forma.setValue(this.usuario);
+    // this.forma.setValue(this.usuario);
   }
 
   ngOnInit() {
@@ -40,6 +44,12 @@ export class DataComponent implements OnInit {
   guardarCambios() {
     console.log(this.forma.value);
     this.forma.reset();
+  }
+
+  agregarPasatiempo() {
+    (<FormArray>this.forma.controls['pasatiempos']).push(
+      new FormControl('', Validators.required)
+    );
   }
 
 }
